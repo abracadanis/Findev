@@ -79,6 +79,11 @@
 			<artifactId>postgresql</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<version>10.1.0-M12</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

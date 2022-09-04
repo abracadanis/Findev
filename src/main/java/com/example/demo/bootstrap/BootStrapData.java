@@ -25,5 +25,11 @@ public class BootStrapData implements CommandLineRunner {
 
         project1.getUsers().add(user1);
         user1.getProject().add(project1);
+
+        projectRepo.save(project1);
+        userRepo.save(user1);
+
+        System.out.println("Abracadabra");
+        System.out.println(project1.toString());
     }
 }

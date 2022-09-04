@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Table(name = "user")
 public class User {
 
     @Id
@@ -17,15 +18,8 @@ public class User {
 
     private String surname;
 
-    @ManyToMany
-    @JoinTable(name = "project_user", joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "project_id"))
-    private Set<Project> project = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(name = "user_projects",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "projects_id"))
-    private Set<Project> projects = new LinkedHashSet<>();
+    @ManyToMany(mappedBy = "users")
+    private Set<Project> projects = new HashSet<>();
 
     public Set<Project> getProjects() {
         return projects;
@@ -60,11 +54,11 @@ public class User {
     }
 
     public Set<Project> getProject() {
-        return project;
+        return projects;
     }
 
     public void setProject(Set<Project> project) {
-        this.project = project;
+        this.projects = project;
     }
 
     @Override
@@ -73,7 +67,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", project=" + project +
+                ", projects=" + projects +
                 '}';
     }
 
