@@ -1,5 +1,6 @@
 package com.example.demo.Entities;
 
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -22,12 +23,13 @@ public class Project {
         inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users = new HashSet<>();
 
-    public Project() {
+
+    public Long getId() {
+        return id;
     }
 
-    public Project(String title, String description) {
-        this.title = title;
-        this.description = description;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

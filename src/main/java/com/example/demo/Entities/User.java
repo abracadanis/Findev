@@ -21,20 +21,20 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private Set<Project> projects = new HashSet<>();
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Set<Project> getProjects() {
         return projects;
     }
 
     public void setProjects(Set<Project> projects) {
         this.projects = projects;
-    }
-
-    public User() {
-    }
-
-    public User(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
     }
 
     public String getName() {
