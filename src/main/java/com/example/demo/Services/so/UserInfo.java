@@ -1,12 +1,11 @@
 package com.example.demo.Services.so;
 
-import com.example.demo.Entities.ProjectEntity;
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
+import javax.validation.constraints.NotNull;
 
-public class User {
+public class UserInfo {
+    @NotNull
+    private Long id;
 
     @NotBlank
     private String name;
@@ -14,8 +13,13 @@ public class User {
     @NotBlank
     private String surname;
 
-    @Schema(nullable = true)
-    private Set<ProjectEntity> projects;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -31,13 +35,5 @@ public class User {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public Set<ProjectEntity> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(Set<ProjectEntity> projects) {
-        this.projects = projects;
     }
 }

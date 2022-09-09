@@ -29,11 +29,8 @@ services:
     environment:
       SWAGGER_JSON: /foo/swagger.json -v /bar:/foo swaggerapi/swagger-ui
       BASE_URL: /api/doc
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.swagger-ui.rule=PathPrefix(`/api/doc`)
-      - traefik.http.routers.swagger-ui.entrypoints=web
-      - traefik.http.services.swagger-ui.loadbalancer.server.port=8080
+
+
 
 
 volumes:

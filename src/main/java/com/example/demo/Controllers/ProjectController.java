@@ -7,14 +7,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "application")
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/projectapi")
 public class ProjectController {
 
     private ProjectService projectService;
@@ -24,8 +21,13 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @PostMapping
-    public ResponseEntity<ProjectSo> createProject (@RequestBody ProjectInputSo projectInputSo){
-        return new ResponseEntity<>(projectService.saveProject(projectInputSo), HttpStatus.CREATED);
+    @PostMapping("/{id}")
+    public ResponseEntity<ProjectSo> createProject (@PathVariable("id") Long id, @RequestBody ProjectInputSo projectInputSo){
+        return new ResponseEntity<>(projectService.createProject(projectInputSo, id), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public String hello(){
+        return "hi";
     }
 }

@@ -5,7 +5,7 @@ logging:
 server:
   port: 8180
   servlet:
-    context-path: ${CONTEXT_PATH:/api/archive}
+    context-path: ${CONTEXT_PATH:/api/findev}
   error:
     include-message: always
     include-binding-errors: always
@@ -19,13 +19,16 @@ spring:
     dbcp2:
       test-while-idle: true
       validation-query: SELECT 1
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
-  main:
-    web-application-type: none
+    generate-ddl: true
