@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "application")
 @RestController
 @RequestMapping(value = "/projectapi")
@@ -26,8 +28,18 @@ public class ProjectController {
         return new ResponseEntity<>(projectService.createProject(projectInputSo, id), HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public String hello(){
-        return "hi";
+    @GetMapping("{id}")
+    public ResponseEntity<ProjectSo> getProjectById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(projectService.getProjectById(id), HttpStatus.FOUND);
+    }
+
+    @GetMapping(value = "/")
+    public ResponseEntity<List<ProjectSo>> getUsers(){
+        return new ResponseEntity<>(projectService.getProjects(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long> deleteUser(@PathVariable("id") Long id){
+        return new ResponseEntity<>(projectService.deleteProject(id), HttpStatus.ACCEPTED);
     }
 }

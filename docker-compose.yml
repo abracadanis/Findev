@@ -22,14 +22,6 @@ services:
       DB_USER: app
       DB_PASSWORD: app
 
-  swagger:
-    image: swaggerapi/swagger-ui
-    ports:
-      - "80:8080"
-    environment:
-      SWAGGER_JSON: /foo/swagger.json -v /bar:/foo swaggerapi/swagger-ui
-      BASE_URL: /api/doc
-
 
 
 

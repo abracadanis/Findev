@@ -64,11 +64,7 @@
 			<artifactId>mapstruct</artifactId>
 			<version>1.5.2.Final</version>
 		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-boot-starter</artifactId>
-			<version>3.0.0</version>
-		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -146,8 +142,8 @@
 				<configuration>
 					<images>
 						<image>
-							<name>findev/fin/${projectEntity.artifactId}:latest</name>
-							<alias>findev/fin/${projectEntity.artifactId}</alias>
+							<name>findev/fin/${project.artifactId}:latest</name>
+							<alias>findev/fin/${project.artifactId}</alias>
 						</image>
 					</images>
 					<verbose>build</verbose>

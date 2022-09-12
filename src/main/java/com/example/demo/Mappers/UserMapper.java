@@ -9,6 +9,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValueCheckStrategy;
 
+import java.util.List;
+
 @Mapper(
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
         collectionMappingStrategy = CollectionMappingStrategy.ACCESSOR_ONLY,
@@ -23,4 +25,6 @@ public interface UserMapper {
     UserInfo mapToInfo(UserEntity userEntity);
 
     UserSo mapToSo(UserEntity userEntity);
+
+    List<UserSo> mapListToSo(List<UserEntity> userEntities);
 }

@@ -12,6 +12,8 @@ import com.example.demo.Services.so.ProjectSo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectService{
 
@@ -59,6 +61,24 @@ public class ProjectService{
         }
 
         return null;
+    }
+
+    public ProjectSo getProjectById(Long id){
+        if(projectRepo.findProjectById(id).isPresent()){
+            return projectMapper.mapToSo(projectRepo.findProjectById(id).get());
+        }
+        return null;
+    }
+
+    public List<ProjectSo> getProjects(){
+        return projectMapper.mapListToSo(projectRepo.findAll());
+    }
+
+    public Long deleteProject(Long id){
+        if(projectRepo.findProjectById(id).isPresent()){
+            projectRepo.deleteById(id);
+            return id;
+        } else return null;
     }
 
 }

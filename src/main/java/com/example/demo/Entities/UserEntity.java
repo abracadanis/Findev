@@ -20,7 +20,7 @@ public class UserEntity {
 
     private String surname;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users",fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<ProjectEntity> projects = new HashSet<ProjectEntity>();
 
