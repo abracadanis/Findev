@@ -1,9 +1,13 @@
 import './App.css';
 import Navbar from "./components/Navbar";
+import ProjectList from "./components/ProjectList/ProjectList";
 
 function App() {
   return (
-    <Navbar/>
+      <div>
+        <Navbar/>
+        <ProjectList/>
+      </div>
   );
 }
 
