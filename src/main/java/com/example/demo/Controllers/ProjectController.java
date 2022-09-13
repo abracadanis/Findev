@@ -34,7 +34,7 @@ public class ProjectController {
     }
 
     @GetMapping(value = "/")
-    public ResponseEntity<List<ProjectSo>> getUsers(){
+    public ResponseEntity<List<ProjectSo>> getProjects(){
         return new ResponseEntity<>(projectService.getProjects(), HttpStatus.OK);
     }
 
