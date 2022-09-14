@@ -1,4 +1,12 @@
+import {createBrowserRouter} from "react-router-dom";
+import React from "react";
+import ProjectList from "./ProjectList/ProjectList";
+import {ProjectSo} from "../openapi";
+
+
+
 const Navbar = () => {
+
     return <div>
 
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -9,11 +17,14 @@ const Navbar = () => {
 
             <div className="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
                 <ul className="navbar-nav">
+                    <li>
+                        <a className="nav-link" href= "/home">Home</a>
+                    </li>
                     <li className="nav-item active">
-                        <a className="nav-link" href="#">Projects</a>
+                        <a className="nav-link" href= "/projects">Projects</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Users</a>
+                        <a className="nav-link" href="/users">Users</a>
                     </li>
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="http://example.com" id="dropdown08"

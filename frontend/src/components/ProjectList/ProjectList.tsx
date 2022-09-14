@@ -1,14 +1,16 @@
 import { ProjectSo } from '../../openapi';
 import ProjectItem from './ProjectItem';
+import {createBrowserRouter} from "react-router-dom";
+import React from "react";
 
 interface ProjectProps {
     project: ProjectSo[];
 }
 
 const ProjectList = (props: ProjectProps) => {
-    const projectItems = () => {};
+
     return (
-        <div className='d-flex flex-row'>
+        <div className='d-flex justify-content-around flex-wrap'>
             {props.project.map((project) => (
                 <ProjectItem
                     key={project.title}

@@ -22,6 +22,19 @@ services:
       DB_USER: app
       DB_PASSWORD: app
 
+  activemq:
+    image: mzv-isd/isd-3/artemis:latest
+    hostname: activemq
+    ports:
+      - 61616:61616
+      - 8161:8161
+      - 5445:5445
+    environment:
+      ARTEMIS_USER: admin
+      ARTEMIS_PASSWORD: admin
+      ANONYMOUS_LOGIN: 'true'
+      ACTIVEMQ_GROUPS_writes: app
+
 
 
 
