@@ -1,6 +1,6 @@
-import {IProject} from "../../models/ProjectModel";
+import { ProjectSo } from '../../openapi';
 
-const ProjectItem = (props: IProject) => {
+const ProjectItem = (props: ProjectSo) => {
     return (
         <div className="card text-light bg-dark w-25 h-100 m-4">
             <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png" className="card-img-top" alt="..."/>
