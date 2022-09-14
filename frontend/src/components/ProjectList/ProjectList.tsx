@@ -1,26 +1,22 @@
-import ProjectItem from "./ProjectItem";
-import {IProject, IProject1} from "../../models/ProjectModel";
+import { ProjectSo } from '../../openapi';
+import ProjectItem from './ProjectItem';
 
-interface ProjectProps{
-    project: IProject1 []
+interface ProjectProps {
+    project: ProjectSo[];
 }
 
 const ProjectList = (props: ProjectProps) => {
-    const projectItems = () => {
-
-    }
-    return <div className = "d-flex flex-row">
-        {props.project.map(project => (
-            <ProjectItem
-            id = {project.id}
-            title = {project.title}
-            description = {project.description}>
-                {project.title}
-                {project.description}
-            </ProjectItem>
-        ))}
-
-    </div>
-}
+    const projectItems = () => {};
+    return (
+        <div className='d-flex flex-row'>
+            {props.project.map((project) => (
+                <ProjectItem
+                    key={project.title}
+                    {...project}
+                ></ProjectItem>
+            ))}
+        </div>
+    );
+};
 
 export default ProjectList;
