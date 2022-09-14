@@ -1,10 +1,17 @@
 import ProjectItem from "./ProjectItem";
+import {IProject, IProject1} from "../../models/ProjectModel";
 
-const ProjectList = (props) => {
+interface ProjectProps{
+    project: IProject1 []
+}
+
+const ProjectList = (props: ProjectProps) => {
+    const projectItems = () => {
+
+    }
     return <div className = "d-flex flex-row">
-        {props.items.map(project => (
+        {props.project.map(project => (
             <ProjectItem
-            key = {project.id}
             id = {project.id}
             title = {project.title}
             description = {project.description}>
