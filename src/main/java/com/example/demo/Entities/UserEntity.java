@@ -1,14 +1,16 @@
 package com.example.demo.Entities;
 
+import com.example.demo.Services.so.ProjectInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "users")
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,23 +20,16 @@ public class User {
 
     private String surname;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<Project> projects = new HashSet<>();
+    @ManyToMany(mappedBy = "users",fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<ProjectEntity> projects = new HashSet<ProjectEntity>();
 
-    public Set<Project> getProjects() {
-        return projects;
+    public Long getId() {
+        return id;
     }
 
-    public void setProjects(Set<Project> projects) {
-        this.projects = projects;
-    }
-
-    public User() {
-    }
-
-    public User(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -53,12 +48,12 @@ public class User {
         this.surname = surname;
     }
 
-    public Set<Project> getProject() {
+    public Set<ProjectEntity> getProjects() {
         return projects;
     }
 
-    public void setProject(Set<Project> project) {
-        this.projects = project;
+    public void setProjects(Set<ProjectEntity> projects) {
+        this.projects = projects;
     }
 
     @Override
@@ -76,9 +71,9 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
+        UserEntity userEntity = (UserEntity) o;
 
-        return Objects.equals(id, user.id);
+        return Objects.equals(id, userEntity.id);
     }
 
     @Override

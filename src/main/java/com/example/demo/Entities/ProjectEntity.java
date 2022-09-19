@@ -1,5 +1,9 @@
 package com.example.demo.Entities;
 
+
+import com.example.demo.Services.so.UserInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -7,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "project")
-public class Project {
+public class ProjectEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,14 +24,16 @@ public class Project {
     @ManyToMany
     @JoinTable(name = "user_project", joinColumns = @JoinColumn(name = "project_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users = new HashSet<>();
+    @JsonIgnore
+    private Set<UserEntity> users = new HashSet<UserEntity>();
 
-    public Project() {
+
+    public Long getId() {
+        return id;
     }
 
-    public Project(String title, String description) {
-        this.title = title;
-        this.description = description;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -46,11 +52,11 @@ public class Project {
         this.description = description;
     }
 
-    public Set<User> getUsers() {
+    public Set<UserEntity> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(Set<UserEntity> users) {
         this.users = users;
     }
 
@@ -70,9 +76,9 @@ public class Project {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Project project = (Project) o;
+        ProjectEntity projectEntity = (ProjectEntity) o;
 
-        return Objects.equals(id, project.id);
+        return Objects.equals(id, projectEntity.id);
     }
 
     @Override

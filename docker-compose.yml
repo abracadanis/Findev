@@ -1,21 +1,42 @@
 version: "3.3"
 
 services:
-  library:
+  postgres:
     restart: always
-    image: sameersbn/postgresql:10-2
+    image: postgres:latest
     environment:
-      - PG_TRUST_LOCALNET=true
-      - DB_NAME=library
-      - DB_USER=postgres
-      - DB_PASS=postgres
-      - PG_RUNDIR=/run/postgres
-      - PG_LOGDIR=/var/log/postgres
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
     ports:
       - "5432:5432"
     volumes:
       - data:/var/lib/postgresql
       - logs:/var/log/postgresql
+
+  findev:
+    image: findev/fin/demo:latest
+    ports:
+      - "8180:8180"
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/postgres
+      DB_USER: app
+      DB_PASSWORD: app
+
+  activemq:
+    image: mzv-isd/isd-3/artemis:latest
+    hostname: activemq
+    ports:
+      - 61616:61616
+      - 8161:8161
+      - 5445:5445
+    environment:
+      ARTEMIS_USER: admin
+      ARTEMIS_PASSWORD: admin
+      ANONYMOUS_LOGIN: 'true'
+      ACTIVEMQ_GROUPS_writes: app
+
+
+
 
 volumes:
   data:

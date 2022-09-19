@@ -1,0 +1,4 @@
+frontend/src/openapi
+frontend/node_modules
+target
+.idea
