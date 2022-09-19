@@ -17,20 +17,25 @@ const api = new ApplicationApi(conf);
 
 const App = () => {
 
+    const [projects, setProjects] = useState<ProjectSo[]>([]);
+    const [users, setUsers] = useState<UserSo[]>([]);
+
     useEffect(() => {
         api.getProjects().then((data) => {
             setProjects(data);
         });
-    }, []);
+    }, [projects]);
 
     useEffect(() => {
         api.getUsers().then((usersData) => {
             setUsers(usersData);
         })
-    })
+    }, [])
 
-    const [projects, setProjects] = useState<ProjectSo[]>([]);
-    const [users, setUsers] = useState<UserSo[]>([]);
+    let props = {
+        project: projects,
+        user: users
+    }
 
     return (
         <div>
@@ -46,7 +51,7 @@ const App = () => {
                         path = "/projects"
                         element={<div>
                                     <Navbar/>
-                                    <ProjectList project={projects}/>
+                                    <ProjectList {...props}/>
                                 </div>}>
                     </Route>
 

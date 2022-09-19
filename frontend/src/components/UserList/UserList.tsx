@@ -20,6 +20,7 @@ const UserList = (props: UserProps) => {
                 <tbody>
                 {props.user.map((user) => (
                     <UserItem
+                        id={user.id}
                         name={user.name}
                         surname={user.surname}
                     ></UserItem>
