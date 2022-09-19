@@ -1,8 +1,5 @@
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Navbar from "./Navbar";
-import ProjectList from "./ProjectList/ProjectList";
-import React, {useState} from "react";
-import {ProjectSo} from "../openapi";
+import React from "react";
 import NewUserForm from "./NewUser/NewUserForm";
 
 const MainPage = () => {

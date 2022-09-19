@@ -1,6 +1,5 @@
 import {ProjectSo, UserSo} from '../../openapi';
 import ProjectItem from './ProjectItem';
-import {createBrowserRouter} from "react-router-dom";
 import React from "react";
 import NewProjectForm from "../NewProject/NewProjectForm";
 

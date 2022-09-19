@@ -24,16 +24,11 @@ const NewProjectForm = (props: UserProps) => {
     });
 
     const onSubmit = async (data: ProjectDataInput) => {
-        api.createProject(userId, data).then();
+        api.createProject(userId!, data).then();
         console.log("CREATE PROJECT");
     }
 
     const [userId, setUserId] = useState<number>();
-
-    const onSelectHandler = (event) => {
-        setUserId(event.target.value);
-        console.log(event.target.value);
-    }
 
     return (
         <div className="w-100 d-inline-block">
@@ -48,7 +43,7 @@ const NewProjectForm = (props: UserProps) => {
                 <FloatingLabel controlId="floatingInput" label="Description">
                     <Form.Control className="mb-3" type="text" {...register("description", { required: "Please enter description." })}/>
                 </FloatingLabel>
-                <Form.Select value={userId} onChange={onSelectHandler}>
+                <Form.Select value={userId} onChange={event => setUserId((event.target.value as unknown) as number)}>
                     {props.user.map((user) => (
                         <option key={user.id} value={user.id}>{user.id} {user.name} {user.surname}</option>
                     ))}

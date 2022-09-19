@@ -1,4 +1,3 @@
-import Navbar from "../Navbar";
 import {UserSo} from "../../openapi";
 import UserItem from "./UserItem";
 
