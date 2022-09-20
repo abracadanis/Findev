@@ -16,11 +16,25 @@ const ProjectInfo = () => {
     const [project, setProject] = useState<ProjectSo>();
 
     useEffect(() => {
-        api.getProjectById((id as unknown) as number).then((data) => {
+        let idInt: number =+ id;
+        console.log(idInt);
+        console.log(typeof idInt);
+        api.getProjectById(idInt)
+            .then((data) => {
             setProject(data);
             console.log(data);
-        });
-    }, []);
+        })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, [id]);
+
+    if (typeof project === 'undefined') return (
+        <div>
+            <Navbar/>
+            <p>ERROR</p>
+        </div>
+    )
 
     return(
         <div>
@@ -30,7 +44,7 @@ const ProjectInfo = () => {
             <p>{project.id}</p>
 
         </div>
-    )
+        )
 }
 
 export default ProjectInfo;
