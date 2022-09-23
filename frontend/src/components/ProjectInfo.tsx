@@ -22,7 +22,7 @@ const ProjectInfo = () => {
         api.getProjectById(idInt)
             .then((data) => {
             setProject(data);
-            console.log(data);
+            console.log("project = " + project);
         })
             .catch((error) => {
                 console.log(error);

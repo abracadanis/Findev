@@ -1,7 +1,7 @@
 import {ApplicationApi, Configuration, UserSo} from "../../openapi";
 import {useForm} from "react-hook-form";
 import {Button, FloatingLabel, Form} from "react-bootstrap";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 const conf = new Configuration({
     basePath: 'http://localhost:3000/api/findev',
@@ -25,10 +25,12 @@ const NewProjectForm = (props: UserProps) => {
 
     const onSubmit = async (data: ProjectDataInput) => {
         api.createProject(userId!, data).then();
-        console.log("CREATE PROJECT");
     }
 
-    const [userId, setUserId] = useState<number>();
+    useEffect(() => {
+    }, [api])
+
+    const [userId, setUserId] = useState<number>(null);
 
     return (
         <div className="w-100 d-inline-block">
@@ -44,6 +46,7 @@ const NewProjectForm = (props: UserProps) => {
                     <Form.Control className="mb-3" type="text" {...register("description", { required: "Please enter description." })}/>
                 </FloatingLabel>
                 <Form.Select value={userId} onChange={event => setUserId((event.target.value as unknown) as number)}>
+                    <option key = 'default' value = ""> Select user </option>
                     {props.user.map((user) => (
                         <option key={user.id} value={user.id}>{user.id} {user.name} {user.surname}</option>
                     ))}

@@ -28,7 +28,7 @@ public class ProjectController {
         return new ResponseEntity<>(projectService.createProject(projectInputSo, id), HttpStatus.CREATED);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProjectSo> getProjectById(@PathVariable("id") Long id){
         return new ResponseEntity<>(projectService.getProjectById(id), HttpStatus.FOUND);
     }
