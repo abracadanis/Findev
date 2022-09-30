@@ -10,7 +10,10 @@ import com.example.demo.Services.so.UserSo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -20,6 +23,8 @@ public class UserService {
     private ProjectRepo projectRepo;
 
     private UserMapper userMapper;
+
+    private ProjectService projectService;
 
     @Autowired
     public void setUserRepo(UserRepo userRepo){
@@ -35,6 +40,9 @@ public class UserService {
     public void setUserMapper(UserMapper userMapper){
         this.userMapper = userMapper;
     }
+
+    @Autowired
+    public void setProjectService(ProjectService projectService) { this.projectService = projectService; }
 
     public UserSo createUser(UserInputSo userInputSo){
         UserEntity userEntity = userMapper.mapToEntity(userInputSo);
@@ -84,9 +92,15 @@ public class UserService {
         return userMapper.mapToSo(userRepo.save(userEntity));
     }
 
-    public Long deleteProject(Long id){
-        if(projectRepo.findProjectById(id).isPresent()){
-            projectRepo.deleteById(id);
+    public Long deleteUser(Long id){
+        UserEntity userEntity = userRepo.findUserById(id).get();
+        Set<ProjectEntity> projects = userEntity.getProjects();
+        List<ProjectEntity> projectList = new ArrayList<ProjectEntity>(projects);
+        for(int i = 0; i < projectList.size(); i++){
+            removeProject(id, projectList.get(i).getId());
+        }
+        if(userRepo.findUserById(id).isPresent()){
+            userRepo.deleteById(id);
             return id;
         } else return null;
     }

@@ -6,7 +6,7 @@ servers:
   - url: http://localhost:8180/api/findev
     description: Generated server url
 paths:
-  /userapi/{user_id}/{project_id}:
+  "/userapi/{user_id}/{project_id}":
     put:
       tags:
         - application
@@ -28,9 +28,9 @@ paths:
         '200':
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/UserSo'
+                "$ref": "#/components/schemas/UserSo"
     post:
       tags:
         - application
@@ -52,10 +52,10 @@ paths:
         '200':
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/UserSo'
-  /userapi/:
+                "$ref": "#/components/schemas/UserSo"
+  "/userapi/":
     get:
       tags:
         - application
@@ -64,11 +64,11 @@ paths:
         '200':
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserSo'
+                  "$ref": "#/components/schemas/UserSo"
     post:
       tags:
         - application
@@ -77,16 +77,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserInput'
+              "$ref": "#/components/schemas/UserInput"
         required: true
       responses:
         '200':
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/UserSo'
-  /projectapi/{id}:
+                "$ref": "#/components/schemas/UserSo"
+  "/projectapi/{id}":
     get:
       tags:
         - application
@@ -102,9 +102,9 @@ paths:
         '200':
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/ProjectSo'
+                "$ref": "#/components/schemas/ProjectSo"
     post:
       tags:
         - application
@@ -120,53 +120,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProjectInput'
+              "$ref": "#/components/schemas/ProjectInput"
         required: true
       responses:
         '200':
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
-                $ref: '#/components/schemas/ProjectSo'
-    delete:
-      tags:
-        - application
-      operationId: deleteUser
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: integer
-                format: int64
-  /userapi/{id}:
-    get:
-      tags:
-        - application
-      operationId: getUserById
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/UserSo'
+                "$ref": "#/components/schemas/ProjectSo"
     delete:
       tags:
         - application
@@ -182,11 +144,49 @@ paths:
         '200':
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
                 type: integer
                 format: int64
-  /projectapi/:
+  "/userapi/{id}":
+    get:
+      tags:
+        - application
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/UserSo"
+    delete:
+      tags:
+        - application
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: integer
+                format: int64
+  "/projectapi/":
     get:
       tags:
         - application
@@ -195,12 +195,12 @@ paths:
         '200':
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ProjectSo'
-  /:
+                  "$ref": "#/components/schemas/ProjectSo"
+  "/":
     get:
       tags:
         - application
@@ -209,7 +209,7 @@ paths:
         '200':
           description: OK
           content:
-            '*/*':
+            "*/*":
               schema:
                 type: string
 components:
@@ -240,7 +240,7 @@ components:
           type: array
           nullable: true
           items:
-            $ref: '#/components/schemas/ProjectEntity'
+            "$ref": "#/components/schemas/ProjectEntity"
         id:
           type: integer
           format: int64
@@ -259,7 +259,7 @@ components:
           type: array
           nullable: true
           items:
-            $ref: '#/components/schemas/ProjectEntity'
+            "$ref": "#/components/schemas/ProjectEntity"
     ProjectInput:
       required:
         - description
@@ -274,7 +274,7 @@ components:
           uniqueItems: true
           type: array
           items:
-            $ref: '#/components/schemas/UserEntity'
+            "$ref": "#/components/schemas/UserEntity"
     UserEntity:
       type: object
       properties:
@@ -302,4 +302,4 @@ components:
           uniqueItems: true
           type: array
           items:
-            $ref: '#/components/schemas/UserEntity'
+            "$ref": "#/components/schemas/UserEntity"

@@ -1,34 +1,30 @@
-import {ApplicationApi, Configuration, UserSo} from "../../openapi";
 import {useForm} from "react-hook-form";
 import {Button, FloatingLabel, Form} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
-
-const conf = new Configuration({
-    basePath: 'http://localhost:3000/api/findev',
-});
-
-const api = new ApplicationApi(conf);
+import useApiHook from "../../hooks/useApiHook";
+import {UserSo} from "../../openapi";
 
 type ProjectDataInput = {
     title: string;
     description: string;
 }
 
-interface UserProps {
-    user: UserSo[];
-}
+type Props = {
+    users: UserSo[];
+    handleUpdate: () => void;
+};
 
-const NewProjectForm = (props: UserProps) => {
+const NewProjectForm = (props: Props) => {
+    const api = useApiHook();
+
     const { register, handleSubmit } = useForm({
         shouldUseNativeValidation: true
     });
 
     const onSubmit = async (data: ProjectDataInput) => {
-        api.createProject(userId!, data).then();
-    }
+        api.createProject(userId!, data).then(() => {props.handleUpdate();});
 
-    useEffect(() => {
-    }, [api])
+    }
 
     const [userId, setUserId] = useState<number>(null);
 
@@ -47,7 +43,7 @@ const NewProjectForm = (props: UserProps) => {
                 </FloatingLabel>
                 <Form.Select value={userId} onChange={event => setUserId((event.target.value as unknown) as number)}>
                     <option key = 'default' value = ""> Select user </option>
-                    {props.user.map((user) => (
+                    {props.users.map((user) => (
                         <option key={user.id} value={user.id}>{user.id} {user.name} {user.surname}</option>
                     ))}
                 </Form.Select>

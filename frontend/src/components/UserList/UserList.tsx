@@ -1,11 +1,20 @@
 import {UserSo} from "../../openapi";
 import UserItem from "./UserItem";
+import useApiHook from "../../hooks/useApiHook";
+import {useEffect, useState} from "react";
 
-interface UserProps {
-    user: UserSo[];
-}
 
-const UserList = (props: UserProps) => {
+const UserList = () => {
+    const api = useApiHook();
+
+    const [users, setUsers] = useState<UserSo[]>([]);
+
+    useEffect(() => {
+        api.getUsers().then((usersData) => {
+            setUsers(usersData);
+        })
+    }, [])
+
     return (
         <div>
             <table className="table m-5 m-lg-5">
@@ -17,7 +26,7 @@ const UserList = (props: UserProps) => {
                 </tr>
                 </thead>
                 <tbody>
-                {props.user.map((user) => (
+                {users.map((user) => (
                     <UserItem
                         key={user.id}
                         id={user.id}

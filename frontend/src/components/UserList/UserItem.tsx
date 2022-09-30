@@ -1,13 +1,9 @@
 import {ApplicationApi, Configuration, UserSo} from "../../openapi";
-
-const conf = new Configuration({
-    basePath: 'http://localhost:3000/api/findev',
-});
-
-const api = new ApplicationApi(conf);
+import useApiHook from "../../hooks/useApiHook";
 
 const UserItem = (props: UserSo) => {
 
+    const api = useApiHook();
     const deleteUser = () => {
         api.deleteUser(props.id).then();
     }

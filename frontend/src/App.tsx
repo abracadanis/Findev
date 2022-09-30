@@ -9,34 +9,10 @@ import MainPage from "./components/MainPage";
 import ErrorPage from "./components/ErrorPage";
 import UserList from "./components/UserList/UserList";
 import ProjectInfo from "./components/ProjectInfo";
-
-const conf = new Configuration({
-    basePath: 'http://localhost:3000/api/findev',
-});
-
-const api = new ApplicationApi(conf);
+import ProjectsPage from "./ProjectsPage";
+import useApiHook from "./hooks/useApiHook";
 
 const App = () => {
-
-    const [projects, setProjects] = useState<ProjectSo[]>([]);
-    const [users, setUsers] = useState<UserSo[]>([]);
-
-    useEffect(() => {
-        api.getProjects().then((data) => {
-            setProjects(data);
-        });
-    }, []);
-
-    useEffect(() => {
-        api.getUsers().then((usersData) => {
-            setUsers(usersData);
-        })
-    }, [])
-
-    let props = {
-        project: projects,
-        user: users
-    }
 
     return (
         <div>
@@ -50,17 +26,14 @@ const App = () => {
 
                     <Route
                         path = "/projects"
-                        element={<div>
-                                    <Navbar/>
-                                    <ProjectList {...props}/>
-                                </div>}>
+                        element={<ProjectsPage/>}>
                     </Route>
 
                     <Route
                         path = "/users"
                         element={<div>
                             <Navbar/>
-                            <UserList user={users}/>
+                            <UserList/>
                         </div>}>
                     </Route>
 

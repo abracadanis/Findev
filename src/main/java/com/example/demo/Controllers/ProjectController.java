@@ -30,7 +30,7 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProjectSo> getProjectById(@PathVariable("id") Long id){
-        return new ResponseEntity<>(projectService.getProjectById(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(projectService.getProjectById(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/")
@@ -39,7 +39,7 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Long> deleteUser(@PathVariable("id") Long id){
+    public ResponseEntity<Long> deleteProject(@PathVariable("id") Long id){
         return new ResponseEntity<>(projectService.deleteProject(id), HttpStatus.ACCEPTED);
     }
 }
