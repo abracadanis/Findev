@@ -1,17 +1,24 @@
 package com.example.demo.Services;
 
+import com.example.demo.Entities.ImageEntity;
 import com.example.demo.Entities.ProjectEntity;
 import com.example.demo.Entities.UserEntity;
 import com.example.demo.Mappers.ProjectMapper;
 import com.example.demo.Mappers.UserMapper;
+import com.example.demo.Repos.ImageRepo;
 import com.example.demo.Repos.ProjectRepo;
 
 import com.example.demo.Repos.UserRepo;
 import com.example.demo.Services.so.ProjectInputSo;
 import com.example.demo.Services.so.ProjectSo;
+import com.sun.imageio.plugins.common.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 @Service
@@ -21,9 +28,13 @@ public class ProjectService{
 
     private UserRepo userRepo;
 
+    private ImageRepo imageRepo;
+
     private ProjectMapper projectMapper;
 
     private UserMapper userMapper;
+
+    private final String FOLDER_PATH = "/home/gareev/git/Findev/src/main/resources/images";
 
     @Autowired
     public void setProjectRepo(ProjectRepo projectRepo) {
@@ -33,6 +44,11 @@ public class ProjectService{
     @Autowired
     public void setUserRepo(UserRepo userRepo){
         this.userRepo = userRepo;
+    }
+
+    @Autowired
+    public void setImageRepo(ImageRepo imageRepo) {
+        this.imageRepo = imageRepo;
     }
 
     @Autowired
@@ -79,6 +95,40 @@ public class ProjectService{
             projectRepo.deleteById(id);
             return id;
         } else return null;
+    }
+
+    public String saveImageFile(Long projectId, MultipartFile file) {
+        if(projectRepo.findProjectById(projectId).isPresent()){
+            ProjectEntity project = projectRepo.findProjectById(projectId).get();
+
+            String filePath = FOLDER_PATH + file.getOriginalFilename();
+            ImageEntity imageEntity = new ImageEntity(file.getOriginalFilename(), file.getContentType(), filePath);
+            imageEntity.setProject(project);
+            imageRepo.save(imageEntity);
+
+            project.setImage(imageEntity);
+            projectRepo.save(project);
+
+            try{
+                file.transferTo(new File(filePath));
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+
+            if(imageEntity != null) {
+                return "file uploaded successfully : " + filePath;
+            } else {
+                return null;
+            }
+        } else return "Project doesnt exist";
+    }
+
+    public byte[] getImageFile(Long id) throws IOException {
+        ImageEntity image = projectRepo.findProjectById(id).get().getImage();
+        String filePath = image.getFilePath();
+        byte[] file = Files.readAllBytes(new File(filePath).toPath());
+        return file;
     }
 
 }

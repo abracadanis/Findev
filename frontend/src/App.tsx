@@ -9,7 +9,7 @@ import MainPage from "./components/MainPage";
 import ErrorPage from "./components/ErrorPage";
 import UserList from "./components/UserList/UserList";
 import ProjectInfo from "./components/ProjectInfo";
-import ProjectsPage from "./ProjectsPage";
+import ProjectsPage from "./components/ProjectsPage";
 import useApiHook from "./hooks/useApiHook";
 
 const App = () => {

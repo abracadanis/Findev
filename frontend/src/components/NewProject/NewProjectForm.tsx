@@ -39,7 +39,7 @@ const NewProjectForm = (props: Props) => {
                     <Form.Control type="text" {...register("title", { required: "Please enter title." })} />
                 </FloatingLabel>
                 <FloatingLabel controlId="floatingInput" label="Description">
-                    <Form.Control className="mb-3" type="text" {...register("description", { required: "Please enter description." })}/>
+                    <Form.Control className="mb-3" as="textarea" rows={3} {...register("description", { required: "Please enter description." })}/>
                 </FloatingLabel>
                 <Form.Select value={userId} onChange={event => setUserId((event.target.value as unknown) as number)}>
                     <option key = 'default' value = ""> Select user </option>

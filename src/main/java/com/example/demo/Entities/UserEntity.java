@@ -16,6 +16,9 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Lob
+    private Byte[] image;
+
     private String name;
 
     private String surname;
@@ -23,6 +26,14 @@ public class UserEntity {
     @ManyToMany(mappedBy = "users",fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<ProjectEntity> projects = new HashSet<ProjectEntity>();
+
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
+        this.image = image;
+    }
 
     public Long getId() {
         return id;

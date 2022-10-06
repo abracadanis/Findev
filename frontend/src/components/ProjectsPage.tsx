@@ -1,9 +1,9 @@
-import Navbar from "./components/Navbar";
+import Navbar from "./Navbar";
 import React, {useEffect, useState} from "react";
-import ProjectList from "./components/ProjectList/ProjectList";
-import NewProjectForm from "./components/NewProject/NewProjectForm";
-import {ProjectSo, UserSo} from "./openapi";
-import useApiHook from "./hooks/useApiHook";
+import ProjectList from "./ProjectList/ProjectList";
+import NewProjectForm from "./NewProject/NewProjectForm";
+import {ProjectSo, UserSo} from "../openapi";
+import useApiHook from "../hooks/useApiHook";
 
 const ProjectsPage = () => {
 

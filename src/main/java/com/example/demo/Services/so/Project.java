@@ -1,5 +1,6 @@
 package com.example.demo.Services.so;
 
+import com.example.demo.Entities.ImageEntity;
 import com.example.demo.Entities.UserEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -16,6 +17,9 @@ public class Project {
 
     @Schema(nullable = true)
     private Set<UserEntity> userEntities;
+
+    @Schema(nullable = true)
+    private ImageEntity image;
 
     public String getTitle() {
         return title;
@@ -39,5 +43,13 @@ public class Project {
 
     public void setUsers(Set<UserEntity> userEntities) {
         this.userEntities = userEntities;
+    }
+
+    public ImageEntity getImage() {
+        return image;
+    }
+
+    public void setImage(ImageEntity image) {
+        this.image = image;
     }
 }

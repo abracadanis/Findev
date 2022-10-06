@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "application")
@@ -41,5 +43,15 @@ public class ProjectController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deleteProject(@PathVariable("id") Long id){
         return new ResponseEntity<>(projectService.deleteProject(id), HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/{id}/image")
+    public ResponseEntity<String> setImage(@PathVariable("id") Long id, @RequestParam("image") MultipartFile file) {
+        return new ResponseEntity<>(projectService.saveImageFile(id, file), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/{id}/image")
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") Long id) throws IOException {
+        return new ResponseEntity<>(projectService.getImageFile(id), HttpStatus.OK);
     }
 }

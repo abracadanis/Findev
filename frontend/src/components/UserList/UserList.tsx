@@ -15,6 +15,12 @@ const UserList = () => {
         })
     }, [])
 
+    const handleUpdate = () => {
+        api.getUsers().then((usersData) => {
+            setUsers(usersData);
+        })
+    }
+
     return (
         <div>
             <table className="table m-5 m-lg-5">
@@ -29,9 +35,8 @@ const UserList = () => {
                 {users.map((user) => (
                     <UserItem
                         key={user.id}
-                        id={user.id}
-                        name={user.name}
-                        surname={user.surname}
+                        user={user}
+                        handleUpdate={handleUpdate}
                     ></UserItem>
                 ))}
                 </tbody>
