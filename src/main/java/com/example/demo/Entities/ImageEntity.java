@@ -1,5 +1,7 @@
 package com.example.demo.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,18 +14,19 @@ public class ImageEntity {
     private String name;
     private String type;
 
-    @OneToOne(mappedBy = "image")
+    @OneToOne(mappedBy = "image",  fetch = FetchType.LAZY)
+    @JsonIgnore
     private ProjectEntity project;
 
-    private String filePath;
+    private byte[] image;
 
     public ImageEntity() {
     }
 
-    public ImageEntity(String name, String type, String filePath) {
+    public ImageEntity(String name, String type, byte[] image) {
         this.name = name;
         this.type = type;
-        this.filePath = filePath;
+        this.image = image;
     }
 
     public Long getId() {
@@ -58,11 +61,11 @@ public class ImageEntity {
         this.project = project;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

@@ -19,7 +19,7 @@ public class Project {
     private Set<UserEntity> userEntities;
 
     @Schema(nullable = true)
-    private ImageEntity image;
+    private Long imageId;
 
     public String getTitle() {
         return title;
@@ -45,11 +45,11 @@ public class Project {
         this.userEntities = userEntities;
     }
 
-    public ImageEntity getImage() {
-        return image;
+    public Long getImageId() {
+        return imageId;
     }
 
-    public void setImage(ImageEntity image) {
-        this.image = image;
+    public void setImageId(Long imageId) {
+        this.imageId = imageId;
     }
 }

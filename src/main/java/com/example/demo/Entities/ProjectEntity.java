@@ -18,7 +18,7 @@ public class ProjectEntity {
     private Long id;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "image_project")
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
     private ImageEntity image;
 
     private String title;

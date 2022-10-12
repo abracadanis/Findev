@@ -11,6 +11,7 @@ import UserList from "./components/UserList/UserList";
 import ProjectInfo from "./components/ProjectInfo";
 import ProjectsPage from "./components/ProjectsPage";
 import useApiHook from "./hooks/useApiHook";
+import UserInfo from "./components/UserInfo";
 
 const App = () => {
 
@@ -40,6 +41,11 @@ const App = () => {
                     <Route
                         path = "/projects/:id"
                         element={<ProjectInfo/>}>
+                    </Route>
+
+                    <Route
+                        path = "/users/:id"
+                        element={<UserInfo/>}>
                     </Route>
 
                 </Routes>

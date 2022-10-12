@@ -24,7 +24,6 @@ public class UserService {
 
     private UserMapper userMapper;
 
-    private ProjectService projectService;
 
     @Autowired
     public void setUserRepo(UserRepo userRepo){
@@ -40,9 +39,6 @@ public class UserService {
     public void setUserMapper(UserMapper userMapper){
         this.userMapper = userMapper;
     }
-
-    @Autowired
-    public void setProjectService(ProjectService projectService) { this.projectService = projectService; }
 
     public UserSo createUser(UserInputSo userInputSo){
         UserEntity userEntity = userMapper.mapToEntity(userInputSo);

@@ -1,5 +1,8 @@
 import {ApplicationApi, Configuration, UserSo} from "../../openapi";
 import useApiHook from "../../hooks/useApiHook";
+import {Link} from "react-router-dom";
+import {Button, ListGroup} from "react-bootstrap";
+
 
 type Props = {
     user: UserSo;
@@ -15,13 +18,16 @@ const UserItem = (props: Props) => {
         });
     }
 
+    let url: string = "users/"+props.user.id;
+
     return(
-        <tr>
-            <th scope="row">{props.user.id}</th>
-            <td>{props.user.name}</td>
-            <td>{props.user.surname}</td>
-            <td><button onClick={deleteUser}>Delete</button></td>
-        </tr>
+        <div className="text-center justify-content-center d-flex m-2">
+            <ListGroup.Item className="w-50" active action href={url}>
+                {props.user.name} {props.user.surname}
+            </ListGroup.Item>
+        </div>
+
+
     )
 }
 

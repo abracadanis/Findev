@@ -2,6 +2,8 @@ import {UserSo} from "../../openapi";
 import UserItem from "./UserItem";
 import useApiHook from "../../hooks/useApiHook";
 import {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
+import {ListGroup} from "react-bootstrap";
 
 
 const UserList = () => {
@@ -23,15 +25,7 @@ const UserList = () => {
 
     return (
         <div>
-            <table className="table m-5 m-lg-5">
-                <thead>
-                <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Surname</th>
-                </tr>
-                </thead>
-                <tbody>
+            <ListGroup className="m-3" defaultActiveKey="#link1">
                 {users.map((user) => (
                     <UserItem
                         key={user.id}
@@ -39,8 +33,7 @@ const UserList = () => {
                         handleUpdate={handleUpdate}
                     ></UserItem>
                 ))}
-                </tbody>
-            </table>
+            </ListGroup>
         </div>
     );
 };
