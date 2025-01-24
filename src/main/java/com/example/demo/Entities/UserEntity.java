@@ -1,6 +1,5 @@
 package com.example.demo.Entities;
 
-import com.example.demo.Services.so.ProjectInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

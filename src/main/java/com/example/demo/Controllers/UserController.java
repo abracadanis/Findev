@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserSo> getUserById(@PathVariable("id") Long id){
-        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
     @PostMapping("/{user_id}/{project_id}")
@@ -49,8 +49,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Long> deleteProject(@PathVariable("id") Long id){
-        return new ResponseEntity<>(userService.deleteProject(id), HttpStatus.ACCEPTED);
+    public ResponseEntity<Long> deleteUser(@PathVariable("id") Long id){
+        return new ResponseEntity<>(userService.deleteUser(id), HttpStatus.ACCEPTED);
     }
 
 }

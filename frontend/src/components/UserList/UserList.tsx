@@ -1,32 +1,44 @@
-import Navbar from "../Navbar";
 import {UserSo} from "../../openapi";
 import UserItem from "./UserItem";
+import useApiHook from "../../hooks/useApiHook";
+import React, {useEffect, useState} from "react";
+import {ListGroup} from "react-bootstrap";
+import NewUserForm from "../NewUser/NewUserForm";
+import Navbar from "../Navbar";
 
-interface UserProps {
-    user: UserSo[];
-}
 
-const UserList = (props: UserProps) => {
+const UserList = () => {
+    const api = useApiHook();
+
+    const [users, setUsers] = useState<UserSo[]>([]);
+
+    useEffect(() => {
+        api.getUsers().then((usersData) => {
+            setUsers(usersData);
+        })
+    }, [])
+
+    const handleUpdate = () => {
+        api.getUsers().then((usersData) => {
+            setUsers(usersData);
+        })
+    }
+
     return (
-        <div>
-            <table className="table m-5 m-lg-5">
-                <thead>
-                <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Surname</th>
-                </tr>
-                </thead>
-                <tbody>
-                {props.user.map((user) => (
+        <div className = "text-center align-items-center justify-content-center  d-block">
+            <Navbar/>
+            <div className="p-4 bg-dark">
+                <NewUserForm/>
+            </div>
+            <ListGroup className="m-3" defaultActiveKey="#link1">
+                {users.map((user) => (
                     <UserItem
-                        id={user.id}
-                        name={user.name}
-                        surname={user.surname}
+                        key={user.id}
+                        user={user}
+                        handleUpdate={handleUpdate}
                     ></UserItem>
                 ))}
-                </tbody>
-            </table>
+            </ListGroup>
         </div>
     );
 };

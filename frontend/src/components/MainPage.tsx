@@ -1,9 +1,5 @@
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Navbar from "./Navbar";
-import ProjectList from "./ProjectList/ProjectList";
-import React, {useState} from "react";
-import {ProjectSo} from "../openapi";
-import NewUserForm from "./NewUser/NewUserForm";
+import React from "react";
 
 const MainPage = () => {
 
@@ -12,9 +8,6 @@ const MainPage = () => {
             <Navbar/>
             <div className="text-center align-items-center justify-content-center  d-block">
                 <p className = "fs-1 m-4">! Welcome page !</p>
-                <div className="p-4 bg-dark">
-                    <NewUserForm/>
-                </div>
                 <p className = "fs-5 fw-lighter"> ... some images ... </p>
                 <p className= "fs-2"> ... some text about us ... </p>
                 <p className = "fs-5 fw-lighter"> ... some images again ... </p>

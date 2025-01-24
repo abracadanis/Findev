@@ -17,6 +17,10 @@ public class ProjectEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    private ImageEntity image;
+
     private String title;
 
     private String description;
@@ -26,6 +30,7 @@ public class ProjectEntity {
         inverseJoinColumns = @JoinColumn(name = "user_id"))
     @JsonIgnore
     private Set<UserEntity> users = new HashSet<UserEntity>();
+
 
 
     public Long getId() {
@@ -60,6 +65,13 @@ public class ProjectEntity {
         this.users = users;
     }
 
+    public ImageEntity getImage() {
+        return image;
+    }
+
+    public void setImage(ImageEntity image) {
+        this.image = image;
+    }
 
     @Override
     public String toString() {
