@@ -2,7 +2,7 @@ import Navbar from "./Navbar";
 import {ApplicationApi, Configuration, UserSo} from "../openapi";
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {Button, ListGroup, Table} from "react-bootstrap";
+import {Button, ListGroup} from "react-bootstrap";
 
 const conf = new Configuration({
     basePath: 'http://localhost:3000/api/findev',
@@ -56,7 +56,14 @@ const UserInfo = () => {
 
             <ListGroup className="w-50 m-3">
                 {Array.from(user.projects).map((project) => (
-                    <ListGroup.Item key={project.id} action href={"/projects/" + project.id} ><div className="d-inline-flex w-75">{project.title}</div> <Button onClick={event => removeProjectHandler(project.id)} variant="danger">Remove Project</Button></ListGroup.Item>
+                    <ListGroup.Item key={project.id}>
+                        <div className="d-inline-flex w-75">
+                            <a href={"/projects/" + user.id}>
+                                {project.title}
+                            </a>
+                        </div>
+                        <Button onClick={event => removeProjectHandler(project.id)} variant="danger">Remove Project</Button>
+                    </ListGroup.Item>
                     ))}
             </ListGroup>
 

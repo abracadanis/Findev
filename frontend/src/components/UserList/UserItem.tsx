@@ -1,7 +1,6 @@
-import {ApplicationApi, Configuration, UserSo} from "../../openapi";
+import {UserSo} from "../../openapi";
 import useApiHook from "../../hooks/useApiHook";
-import {Link} from "react-router-dom";
-import {Button, ListGroup} from "react-bootstrap";
+import {ListGroup} from "react-bootstrap";
 
 
 type Props = {

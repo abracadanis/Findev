@@ -1,8 +1,8 @@
 import Navbar from "./Navbar";
 import {ApplicationApi, Configuration, ProjectSo, UserSo} from "../openapi";
-import {redirect, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {ChangeEvent, useEffect, useState} from "react";
-import {Button, Col, Container, Dropdown, ListGroup, Modal, Row, Stack, Table} from "react-bootstrap";
+import {Button, Col, Container, Dropdown, ListGroup, Modal, Row} from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import "./ProjectInfo.css";
 
@@ -166,9 +166,16 @@ const ProjectInfo = () => {
                     </Col>
                 </Row>
             </Container>
-            <ListGroup className="w-50">
+            <ListGroup className="w-50 m-3">
                     {Array.from(project.users).map((user) => (
-                        <ListGroup.Item key={user.id} action className="m-3" href={"/users/" + user.id}><div className="d-inline-flex w-75">{user.name} {user.surname}</div> <Button onClick={event => removeUserHandler(user.id)} variant="danger">Remove User</Button></ListGroup.Item>
+                        <ListGroup.Item key={user.id}>
+                            <div className="d-inline-flex w-75">
+                                <a href={"/users/" + user.id}>
+                                    {user.name} {user.surname}
+                                </a>
+                            </div>
+                            <Button onClick={event => removeUserHandler(user.id)} variant="danger">Remove User</Button>
+                        </ListGroup.Item>
                     ))}
             </ListGroup>
         </div>

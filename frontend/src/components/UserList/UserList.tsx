@@ -2,7 +2,6 @@ import {UserSo} from "../../openapi";
 import UserItem from "./UserItem";
 import useApiHook from "../../hooks/useApiHook";
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
 import {ListGroup} from "react-bootstrap";
 
 

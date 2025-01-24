@@ -1,6 +1,6 @@
 import {useForm} from "react-hook-form";
 import {Button, FloatingLabel, Form} from "react-bootstrap";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import useApiHook from "../../hooks/useApiHook";
 import {UserSo} from "../../openapi";
 
