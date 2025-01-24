@@ -58,7 +58,7 @@ const UserInfo = () => {
                 {Array.from(user.projects).map((project) => (
                     <ListGroup.Item key={project.id}>
                         <div className="d-inline-flex w-75">
-                            <a href={"/projects/" + user.id}>
+                            <a href={"/projects/" + project.id}>
                                 {project.title}
                             </a>
                         </div>

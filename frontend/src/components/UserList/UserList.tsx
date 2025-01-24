@@ -1,8 +1,10 @@
 import {UserSo} from "../../openapi";
 import UserItem from "./UserItem";
 import useApiHook from "../../hooks/useApiHook";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ListGroup} from "react-bootstrap";
+import NewUserForm from "../NewUser/NewUserForm";
+import Navbar from "../Navbar";
 
 
 const UserList = () => {
@@ -23,7 +25,11 @@ const UserList = () => {
     }
 
     return (
-        <div>
+        <div className = "text-center align-items-center justify-content-center  d-block">
+            <Navbar/>
+            <div className="p-4 bg-dark">
+                <NewUserForm/>
+            </div>
             <ListGroup className="m-3" defaultActiveKey="#link1">
                 {users.map((user) => (
                     <UserItem

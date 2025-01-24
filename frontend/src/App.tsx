@@ -28,10 +28,7 @@ const App = () => {
 
                     <Route
                         path = "/users"
-                        element={<div>
-                            <Navbar/>
-                            <UserList/>
-                        </div>}>
+                        element={<UserList/>}>
                     </Route>
 
                     <Route
