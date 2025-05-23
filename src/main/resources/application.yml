@@ -1,0 +1,39 @@
+logging:
+  level:
+    com.example.demo: DEBUG
+
+server:
+  port: 8180
+  servlet:
+    context-path: ${CONTEXT_PATH:/api/findev}
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: app
+    password: app
+    driver-class-name: org.postgresql.Driver
+    dbcp2:
+      test-while-idle: true
+      validation-query: SELECT 1
+  security:
+    user:
+      name: admin
+      password: admin
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+

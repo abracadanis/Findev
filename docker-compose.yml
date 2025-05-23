@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+  postgres:
+    restart: always
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/var/lib/postgresql
+      - logs:/var/log/postgresql
+
+  findev:
+    image: findev/fin/demo:latest
+    ports:
+      - "8180:8180"
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/postgres
+      DB_USER: app
+      DB_PASSWORD: app
+
+volumes:
+  data:
+  logs:
