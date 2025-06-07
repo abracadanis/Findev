@@ -74,9 +74,9 @@ public class ProjectService{
             UserEntity userEntity = userRepo.findUserById(projectInputSo.getOwnerId()).get();
             projectEntity.getUsers().add(userEntity);
             projectEntity.setDraft(isDraft);
-            Long projectId = projectRepo.save(projectEntity).getId();
+            projectEntity = projectRepo.save(projectEntity);
 
-            userEntity.getProjects().add(projectRepo.findProjectById(projectId).get());
+            userEntity.getProjects().add(projectRepo.findProjectById(projectEntity.getId()).get());
             userRepo.save(userEntity);
 
             return projectMapper.mapToSo(projectEntity);
@@ -140,6 +140,16 @@ public class ProjectService{
         }
         projectRepo.deleteById(id);
 
+        return projectMapper.mapToSo(project);
+    }
+
+    public ProjectSo updateProject(ProjectInputSo projectInput, Long id, Boolean isDraft) {
+        ProjectEntity project = projectRepo.findProjectById(id).orElseThrow(
+                () -> new NotFoundException(String.format("Project with id '%d' not found", id))
+        );
+        projectMapper.updateProject(project, projectInput);
+        project.setDraft(isDraft);
+        project = projectRepo.save(project);
         return projectMapper.mapToSo(project);
     }
 

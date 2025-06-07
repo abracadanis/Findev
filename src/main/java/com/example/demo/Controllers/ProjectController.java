@@ -70,4 +70,10 @@ public class ProjectController {
     public ResponseEntity<Resource> getImage(@PathVariable("id") Long id) throws IOException {
         return new ResponseEntity<>(new ByteArrayResource(projectService.getImageFile(id)), HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProjectSo> updateProjectInfo(
+            @PathVariable("id") Long id, @RequestBody ProjectInputSo project, @RequestParam Boolean isDraft) {
+        return new ResponseEntity<>(projectService.updateProject(project, id, isDraft), HttpStatus.ACCEPTED);
+    }
 }

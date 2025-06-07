@@ -36,10 +36,12 @@ public interface ProjectMapper {
     ProjectSo mapToSo(ProjectEntity projectEntity);
 
     @Named("usersToIdList")
-    public static Long usersToIdList(UserEntity user) {
+    static Long usersToIdList(UserEntity user) {
         return user.getId();
     }
 
     List<ProjectSo> mapListToSo(List<ProjectEntity> projectEntities);
+
+    void updateProject(@MappingTarget ProjectEntity projectEntity, ProjectInputSo projectInputSo);
 
 }
