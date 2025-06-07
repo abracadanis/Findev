@@ -5,13 +5,12 @@ import com.example.demo.Entities.UserEntity;
 import com.example.demo.Mappers.UserMapper;
 import com.example.demo.Repos.ProjectRepo;
 import com.example.demo.Repos.UserRepo;
-import com.example.demo.Services.so.UserInputSo;
-import com.example.demo.Services.so.UserSo;
+import com.example.demo.Services.so.user.UserInputSo;
+import com.example.demo.Services.so.user.UserSo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

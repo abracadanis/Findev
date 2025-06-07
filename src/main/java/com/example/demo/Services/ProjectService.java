@@ -9,17 +9,15 @@ import com.example.demo.Repos.ImageRepo;
 import com.example.demo.Repos.ProjectRepo;
 
 import com.example.demo.Repos.UserRepo;
-import com.example.demo.Services.so.ProjectInputSo;
-import com.example.demo.Services.so.ProjectSo;
+import com.example.demo.Services.so.project.ProjectInputSo;
+import com.example.demo.Services.so.project.ProjectSo;
 import com.example.demo.utils.ImageUtils;
-import com.sun.imageio.plugins.common.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.webjars.NotFoundException;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +34,8 @@ public class ProjectService{
     private ProjectMapper projectMapper;
 
     private UserMapper userMapper;
+
+    private UserService userService;
 
     @Autowired
     public void setProjectRepo(ProjectRepo projectRepo) {
@@ -62,13 +62,18 @@ public class ProjectService{
         this.userMapper = userMapper;
     }
 
-    public ProjectSo createProject(ProjectInputSo projectInputSo, Long id) {
-        if(userRepo.findUserById(id).isPresent()) {
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public ProjectSo createProject(ProjectInputSo projectInputSo, Boolean isDraft) throws NotFoundException {
+        if(userRepo.findUserById(projectInputSo.getOwnerId()).isPresent()) {
 
             ProjectEntity projectEntity = projectMapper.mapToEntity(projectInputSo);
-            UserEntity userEntity = userRepo.findUserById(id).get();
-
+            UserEntity userEntity = userRepo.findUserById(projectInputSo.getOwnerId()).get();
             projectEntity.getUsers().add(userEntity);
+            projectEntity.setDraft(isDraft);
             Long projectId = projectRepo.save(projectEntity).getId();
 
             userEntity.getProjects().add(projectRepo.findProjectById(projectId).get());
@@ -87,8 +92,8 @@ public class ProjectService{
         return null;
     }
 
-    public List<ProjectSo> getProjects(){
-        return projectMapper.mapListToSo(projectRepo.findAll());
+    public List<ProjectSo> getProjects(Boolean isDraft){
+        return projectMapper.mapListToSo(projectRepo.findProjectsByDraft(isDraft));
     }
 
     public List<UserEntity> getListOfUsers(Long id){
@@ -123,6 +128,19 @@ public class ProjectService{
         ImageEntity image = imageRepo.findById(id).get();
         byte[] file = ImageUtils.decompressImage(image.getImage());
         return file;
+    }
+
+    public ProjectSo deleteProject(Long id) {
+        ProjectEntity project = projectRepo.findProjectById(id).orElseThrow(
+                () -> new NotFoundException(String.format("Project with id '%d' not found", id))
+        );
+        List<UserEntity> list = getListOfUsers(id);
+        for(int i = 0; i < list.size(); i++){
+            userService.removeProject(id, list.get(i).getId());
+        }
+        projectRepo.deleteById(id);
+
+        return projectMapper.mapToSo(project);
     }
 
 }

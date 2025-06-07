@@ -1,7 +1,9 @@
-package com.example.demo.Services.so;
+package com.example.demo.Services.so.user;
 
-public class ProjectSo extends Project{
+import javax.validation.constraints.NotNull;
 
+public class UserInfo extends User {
+    @NotNull
     private Long id;
 
     public Long getId() {

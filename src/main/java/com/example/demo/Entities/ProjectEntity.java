@@ -1,10 +1,10 @@
 package com.example.demo.Entities;
 
 
-import com.example.demo.Services.so.UserInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -14,7 +14,7 @@ import java.util.Set;
 public class ProjectEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -25,13 +25,18 @@ public class ProjectEntity {
 
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "id", insertable = false, updatable = false)
+    @NotNull
+    private UserEntity owner;
+
     @ManyToMany
     @JoinTable(name = "user_project", joinColumns = @JoinColumn(name = "project_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id"))
     @JsonIgnore
     private Set<UserEntity> users = new HashSet<UserEntity>();
 
-
+    private Boolean isDraft;
 
     public Long getId() {
         return id;
@@ -57,6 +62,14 @@ public class ProjectEntity {
         this.description = description;
     }
 
+    public UserEntity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserEntity owner) {
+        this.owner = owner;
+    }
+
     public Set<UserEntity> getUsers() {
         return users;
     }
@@ -73,12 +86,22 @@ public class ProjectEntity {
         this.image = image;
     }
 
+    public Boolean getDraft() {
+        return isDraft;
+    }
+
+    public void setDraft(Boolean draft) {
+        isDraft = draft;
+    }
+
     @Override
     public String toString() {
-        return "Project{" +
+        return "ProjectEntity{" +
                 "id=" + id +
+                ", image=" + image +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", owner=" + owner +
                 ", users=" + users +
                 '}';
     }

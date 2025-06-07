@@ -1,8 +1,8 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Services.UserService;
-import com.example.demo.Services.so.UserInputSo;
-import com.example.demo.Services.so.UserSo;
+import com.example.demo.Services.so.user.UserInputSo;
+import com.example.demo.Services.so.user.UserSo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "application")
+@Tag(name = "User")
 @RestController
 @RequestMapping(value = "/userapi")
 public class UserController {

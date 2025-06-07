@@ -3,7 +3,6 @@ package com.example.demo.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,7 +11,7 @@ import java.util.Set;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -21,7 +20,10 @@ public class UserEntity {
 
     @ManyToMany(mappedBy = "users",fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<ProjectEntity> projects = new HashSet<ProjectEntity>();
+    private Set<ProjectEntity> projects;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<ProjectEntity> ownedProjects;
 
     public Long getId() {
         return id;
@@ -53,6 +55,14 @@ public class UserEntity {
 
     public void setProjects(Set<ProjectEntity> projects) {
         this.projects = projects;
+    }
+
+    public Set<ProjectEntity> getOwnedProjects() {
+        return ownedProjects;
+    }
+
+    public void setOwnedProjects(Set<ProjectEntity> ownedProjects) {
+        this.ownedProjects = ownedProjects;
     }
 
     @Override

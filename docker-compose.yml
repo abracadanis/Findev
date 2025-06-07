@@ -17,10 +17,21 @@ services:
     image: findev/fin/demo:latest
     ports:
       - "8180:8180"
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
     environment:
       DB_URL: jdbc:postgresql://postgres:5432/postgres
       DB_USER: app
       DB_PASSWORD: app
+
+  frontend:
+    image: abracadanis/findev-frontend
+    ports:
+      - "8080:3000"
+    depends_on:
+      - findev
 
 volumes:
   data:
