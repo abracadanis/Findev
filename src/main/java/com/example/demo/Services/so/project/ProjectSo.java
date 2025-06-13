@@ -1,13 +1,18 @@
 package com.example.demo.Services.so.project;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Set;
 
-public class ProjectSo extends ProjectInputSo{
+public class ProjectSo extends Project{
 
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private Long id;
 
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private Set<Long> users;
 
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private Boolean isDraft;
 
     public Long getId() {
@@ -33,4 +38,5 @@ public class ProjectSo extends ProjectInputSo{
     public void setDraft(Boolean draft) {
         isDraft = draft;
     }
+
 }

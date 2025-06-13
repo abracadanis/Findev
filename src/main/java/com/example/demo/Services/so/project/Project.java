@@ -1,22 +1,18 @@
 package com.example.demo.Services.so.project;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class Project {
 
-    @NotBlank
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private String title;
 
-    @NotBlank
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private String description;
 
-    @Schema(nullable = true)
-    private Long imageId;
-
-    @NotNull
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private Long ownerId;
 
     public Long getOwnerId() {
@@ -41,13 +37,5 @@ public class Project {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Long getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(Long imageId) {
-        this.imageId = imageId;
     }
 }

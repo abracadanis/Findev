@@ -3,10 +3,12 @@ package com.example.demo.Mappers;
 import com.example.demo.Entities.ProjectEntity;
 import com.example.demo.Entities.UserEntity;
 import com.example.demo.Mappers.decorators.ProjectMapperDecorator;
+import com.example.demo.Services.so.project.ProjectWithFullImageResponseSo;
+import com.example.demo.Services.so.project.ProjectWithImageNameResponseSo;
 import com.example.demo.Services.so.project.ProjectInputSo;
-import com.example.demo.Services.so.project.ProjectSo;
 import org.mapstruct.*;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -14,7 +16,6 @@ import java.util.List;
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
         collectionMappingStrategy = CollectionMappingStrategy.ACCESSOR_ONLY,
         componentModel = "spring"
-        //uses = UserMapper.class, injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
 @DecoratedWith(ProjectMapperDecorator.class)
 public interface ProjectMapper {
@@ -23,24 +24,30 @@ public interface ProjectMapper {
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(target = "owner.id", source = "ownerId"),
-            @Mapping(target = "image.id", source = "imageId")
+            @Mapping(target = "owner.id", source = "ownerId")
     })
-    ProjectEntity mapToEntity(ProjectInputSo projectInputSo);
+    ProjectEntity mapToEntity(ProjectInputSo project) throws IOException;
 
     @Mappings({
-            @Mapping(target = "imageId", source = "image.id"),
+            @Mapping(target = "imageFileName", source = "imageFileName"),
             @Mapping(target = "ownerId", source = "owner.id"),
             @Mapping(target = "users", source = "users", qualifiedByName = "usersToIdList")
     })
-    ProjectSo mapToSo(ProjectEntity projectEntity);
+    ProjectWithImageNameResponseSo mapToProjectWithImageNameResponse(ProjectEntity projectEntity);
+
+    @Mappings({
+            @Mapping(target = "imageFileName", ignore = true),
+            @Mapping(target = "ownerId", source = "owner.id"),
+            @Mapping(target = "users", source = "users", qualifiedByName = "usersToIdList")
+    })
+    ProjectWithFullImageResponseSo mapToProjectWithFullImageResponse(ProjectEntity projectEntity);
 
     @Named("usersToIdList")
     static Long usersToIdList(UserEntity user) {
         return user.getId();
     }
 
-    List<ProjectSo> mapListToSo(List<ProjectEntity> projectEntities);
+    List<ProjectWithImageNameResponseSo> mapListToSo(List<ProjectEntity> projectEntities);
 
     void updateProject(@MappingTarget ProjectEntity projectEntity, ProjectInputSo projectInputSo);
 

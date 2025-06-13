@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
@@ -75,16 +76,17 @@ public class UserService {
     public UserSo removeProject(Long userId, Long projectId){
         UserEntity userEntity;
         ProjectEntity projectEntity;
-        if(userRepo.findUserById(userId).isPresent()){
-            userEntity = userRepo.findUserById(userId).get();
-        } else return null;
-        if(projectRepo.findProjectById(projectId).isPresent()){
-            projectEntity = projectRepo.findProjectById(projectId).get();
-            projectEntity.getUsers().remove(userEntity);
-            userEntity.getProjects().remove(projectEntity);
-            projectRepo.save(projectEntity);
-        } else return null;
-        return userMapper.mapToSo(userRepo.save(userEntity));
+        UserEntity user = userRepo.findUserById(userId).orElseThrow(() ->
+            new NoSuchElementException(String.format("User with ID '%d' not exists", userId))
+        );
+
+        ProjectEntity project = projectRepo.findProjectById(projectId).orElseThrow(() ->
+            new NoSuchElementException(String.format("Project with ID '%d' not exists", projectId))
+        );
+        project.getUsers().remove(user);
+        user.getProjects().remove(project);
+        projectRepo.save(project);
+        return userMapper.mapToSo(userRepo.save(user));
     }
 
     public Long deleteUser(Long id){
