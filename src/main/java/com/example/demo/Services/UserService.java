@@ -7,6 +7,7 @@ import com.example.demo.Repos.ProjectRepo;
 import com.example.demo.Repos.UserRepo;
 import com.example.demo.Services.so.user.UserInputSo;
 import com.example.demo.Services.so.user.UserSo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,18 +59,15 @@ public class UserService {
     }
 
     public UserSo setProject(Long userId, Long projectId){
-        UserEntity userEntity;
-        ProjectEntity projectEntity;
-        if(userRepo.findUserById(userId).isPresent()){
-            userEntity = userRepo.findUserById(userId).get();
-        } else return null;
-        if(projectRepo.findProjectById(projectId).isPresent()){
-            projectEntity = projectRepo.findProjectById(projectId).get();
-        } else return null;
-        userEntity.getProjects().add(projectEntity);
+        UserEntity userEntity = userRepo.findUserById(userId).orElseThrow(() ->
+                new NoSuchElementException(String.format("User with ID '%d' not exists", userId))
+        );
+        ProjectEntity projectEntity = projectRepo.findProjectById(projectId).orElseThrow(() ->
+                new NoSuchElementException(String.format("Project with ID '%d' not exists", projectId))
+        );
         projectEntity.getUsers().add(userEntity);
-        userRepo.save(userEntity);
         projectRepo.save(projectEntity);
+        userEntity = userRepo.findUserById(userId).get();
         return userMapper.mapToSo(userEntity);
     }
 

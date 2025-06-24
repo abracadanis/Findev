@@ -3,6 +3,8 @@ package com.example.demo.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
+
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,7 +13,8 @@ import java.util.Set;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
+    @SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq",  allocationSize=1)
     private Long id;
 
     private String name;
@@ -20,10 +23,10 @@ public class UserEntity {
 
     @ManyToMany(mappedBy = "users",fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<ProjectEntity> projects;
+    private Set<ProjectEntity> projects = new HashSet<>();
 
     @OneToMany(mappedBy = "owner")
-    private Set<ProjectEntity> ownedProjects;
+    private Set<ProjectEntity> ownedProjects = new HashSet<>();
 
     public Long getId() {
         return id;

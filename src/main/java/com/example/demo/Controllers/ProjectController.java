@@ -3,14 +3,12 @@ package com.example.demo.Controllers;
 import com.example.demo.Repos.ProjectRepo;
 import com.example.demo.Services.ProjectService;
 import com.example.demo.Services.UserService;
-import com.example.demo.Services.so.project.ProjectWithFullImageResponseSo;
-import com.example.demo.Services.so.project.ProjectWithImageNameResponseSo;
-import com.example.demo.Services.so.project.ProjectInputSo;
-import com.example.demo.Services.so.project.ProjectSo;
+import com.example.demo.Services.so.project.*;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Project")
@@ -45,13 +44,14 @@ public class ProjectController {
 
     @PostMapping(value = "/", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE})
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ProjectSo> createProject (
+    public ResponseEntity<ProjectWithImageNameResponseSo> createProject (
             @Parameter(
                     description = "JSON data payload",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ProjectInputSo.class))
             )
             @RequestPart(name = "body")
+            @Valid
             ProjectInputSo projectInputSo,
             @Parameter(
                     description = "Is this project a draft?",
@@ -69,7 +69,7 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ProjectSo> getProjectById(@PathVariable("id") Long id){
+    public ResponseEntity<ProjectWithFullImageResponseSo> getProjectById(@PathVariable("id") Long id) throws IOException {
         return new ResponseEntity<>(projectService.getProjectById(id), HttpStatus.OK);
     }
 
@@ -92,7 +92,7 @@ public class ProjectController {
 
     @DeleteMapping("/{id}")
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ProjectSo> deleteProject(@PathVariable("id") Long id){
+    public ResponseEntity<ProjectWithImageNameResponseSo> deleteProject(@PathVariable("id") Long id){
         return new ResponseEntity<>(projectService.deleteProject(id), HttpStatus.ACCEPTED);
     }
 
@@ -107,10 +107,29 @@ public class ProjectController {
 //        return new ResponseEntity<>(new ByteArrayResource(projectService.getImageFile(id)), HttpStatus.OK);
 //    }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE})
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<ProjectWithImageNameResponseSo> updateProjectInfo(
-            @PathVariable("id") Long id, @RequestBody ProjectInputSo project, @RequestParam Boolean isDraft) {
-        return new ResponseEntity<>(projectService.updateProject(project, id, isDraft), HttpStatus.ACCEPTED);
+            @PathVariable("id") Long id,
+            @Parameter(
+                    description = "JSON data payload",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ProjectInputSo.class))
+            )
+            @RequestPart(name = "body")
+            @Valid
+            ProjectUpdateSo project,
+            @Parameter(
+                    description = "Is this project a draft?",
+                    required = true,
+                    schema = @Schema(type = "boolean")
+            )
+            @RequestParam("isDraft") Boolean isDraft,
+            @Parameter(
+                    description = "Image file to upload",
+                    content = @Content(mediaType = MediaType.IMAGE_JPEG_VALUE)
+            )
+            @RequestPart(name = "file", required = false) MultipartFile file) throws Exception {
+        return new ResponseEntity<>(projectService.updateProject(project, id, isDraft, file), HttpStatus.ACCEPTED);
     }
 }

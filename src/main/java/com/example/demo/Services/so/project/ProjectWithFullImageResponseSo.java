@@ -4,13 +4,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class ProjectWithFullImageResponseSo extends ProjectSo{
     @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private byte[] imageFileName;
+    private byte[] imageByteArray;
 
-    public byte[] getImageFileName() {
-        return imageFileName;
+    public byte[] getImageByteArray() {
+        return imageByteArray;
     }
 
-    public void setImageFileName(byte[] imageFileName) {
-        this.imageFileName = imageFileName;
+    public void setImageByteArray(byte[] imageByteArray) {
+        this.imageByteArray = imageByteArray;
     }
 }

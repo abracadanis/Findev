@@ -14,7 +14,8 @@ import java.util.Set;
 public class ProjectEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_id_seq")
+    @SequenceGenerator(name = "project_id_seq", sequenceName = "project_id_seq",  allocationSize=1)
     private Long id;
 
     private String title;
@@ -22,7 +23,7 @@ public class ProjectEntity {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "owner_id", nullable = false)
     @NotNull
     private UserEntity owner;
 

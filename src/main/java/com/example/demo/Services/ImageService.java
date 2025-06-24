@@ -1,40 +1,39 @@
 package com.example.demo.Services;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 @Service
 public class ImageService {
 
-    private static final String path = "classpath:projectImages";
+    private static final String path = "projectImages/";
 
     public String saveFileToFileSystem (MultipartFile file) throws IOException {
-        String fileName = file.getOriginalFilename();
+        String fileName = UUID.randomUUID() + "." + file.getContentType().split("/")[1];
 
-        String filePath = path + File.separator + fileName;
-
-        File f = new File(path);
-
-        if(!f.exists()) {
-            f.mkdir();
-        }
-
-        Files.copy(file.getInputStream(), Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
+        OutputStream stream = new FileOutputStream(path + fileName);
+        file.getInputStream().transferTo(stream);
 
         return fileName;
     }
 
-//    public InputStream getResourceFile (String fileName) {
-//        String filePath = path + File.separator + fileName;
-//
-//        Files.
-//    }
+    public byte[] getFileAsByteArray (String fileName) throws IOException {
+        byte[] ba;
+        try (InputStream inputStream = new FileInputStream(path + fileName);){
+            ba = inputStream.readAllBytes();
+        }
+
+        return ba;
+    }
+
+    public void deleteFileFromFileSystem (String fileName) throws IOException {
+        if (!Files.deleteIfExists(Paths.get(path + fileName))) {
+            throw new IOException("Could not delete file: " + fileName);
+        }
+    }
 }

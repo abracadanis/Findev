@@ -25,6 +25,8 @@ services:
       DB_URL: jdbc:postgresql://postgres:5432/postgres
       DB_USER: app
       DB_PASSWORD: app
+    volumes:
+      - ./src/main/resources/projectImages:/projectImages
 
   frontend:
     image: abracadanis/findev-frontend

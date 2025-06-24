@@ -3,11 +3,13 @@ package com.example.demo.Mappers;
 import com.example.demo.Entities.ProjectEntity;
 import com.example.demo.Entities.UserEntity;
 import com.example.demo.Mappers.decorators.ProjectMapperDecorator;
+import com.example.demo.Services.so.project.ProjectUpdateSo;
 import com.example.demo.Services.so.project.ProjectWithFullImageResponseSo;
 import com.example.demo.Services.so.project.ProjectWithImageNameResponseSo;
 import com.example.demo.Services.so.project.ProjectInputSo;
 import org.mapstruct.*;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public interface ProjectMapper {
     ProjectWithImageNameResponseSo mapToProjectWithImageNameResponse(ProjectEntity projectEntity);
 
     @Mappings({
-            @Mapping(target = "imageFileName", ignore = true),
+            @Mapping(target = "imageByteArray", ignore = true),
             @Mapping(target = "ownerId", source = "owner.id"),
             @Mapping(target = "users", source = "users", qualifiedByName = "usersToIdList")
     })
@@ -49,6 +51,6 @@ public interface ProjectMapper {
 
     List<ProjectWithImageNameResponseSo> mapListToSo(List<ProjectEntity> projectEntities);
 
-    void updateProject(@MappingTarget ProjectEntity projectEntity, ProjectInputSo projectInputSo);
+    void updateProject(@MappingTarget ProjectEntity projectEntity, ProjectUpdateSo projectInputSo);
 
 }

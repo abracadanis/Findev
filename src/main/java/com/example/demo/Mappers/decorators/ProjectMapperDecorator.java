@@ -28,12 +28,9 @@ public abstract class ProjectMapperDecorator implements ProjectMapper {
         entity.setTitle(input.getTitle());
         entity.setDescription(input.getDescription());
 
-        UserEntity user = userRepo.findUserById(input.getOwnerId()).orElseThrow(
-                () -> new NoSuchElementException(String.format("User with id '%d' not found", input.getOwnerId()))
-        );
-        entity.setOwner(user);
-
         return entity;
     }
+
+
 
 }
