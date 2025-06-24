@@ -13,7 +13,7 @@ import java.util.List;
 
 @Tag(name = "User")
 @RestController
-@RequestMapping(value = "/userapi")
+@RequestMapping(value = "/user")
 public class UserController {
 
     private UserService userService;

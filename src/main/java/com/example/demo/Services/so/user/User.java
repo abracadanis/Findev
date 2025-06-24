@@ -1,6 +1,6 @@
 package com.example.demo.Services.so.user;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public class User {
 

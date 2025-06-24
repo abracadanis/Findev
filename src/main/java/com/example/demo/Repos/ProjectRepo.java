@@ -17,4 +17,7 @@ public interface ProjectRepo extends JpaRepository<ProjectEntity,Long> {
 
     @Query("SELECT p FROM ProjectEntity p WHERE p.isDraft = ?1")
     List<ProjectEntity> findProjectsByDraft(Boolean isDraft);
+
+    @Query("SELECT p.users FROM ProjectEntity p")
+    List<Long> findUserIdsByProjectId(Long id);
 }

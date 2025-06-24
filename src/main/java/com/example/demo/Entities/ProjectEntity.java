@@ -3,8 +3,8 @@ package com.example.demo.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -14,19 +14,16 @@ import java.util.Set;
 public class ProjectEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_id_seq")
+    @SequenceGenerator(name = "project_id_seq", sequenceName = "project_id_seq",  allocationSize=1)
     private Long id;
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id", referencedColumnName = "id")
-    private ImageEntity image;
 
     private String title;
 
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "owner_id", nullable = false)
     @NotNull
     private UserEntity owner;
 
@@ -35,6 +32,8 @@ public class ProjectEntity {
         inverseJoinColumns = @JoinColumn(name = "user_id"))
     @JsonIgnore
     private Set<UserEntity> users = new HashSet<UserEntity>();
+
+    private String imageFileName;
 
     private Boolean isDraft;
 
@@ -78,12 +77,12 @@ public class ProjectEntity {
         this.users = users;
     }
 
-    public ImageEntity getImage() {
-        return image;
+    public String getImageFileName() {
+        return imageFileName;
     }
 
-    public void setImage(ImageEntity image) {
-        this.image = image;
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 
     public Boolean getDraft() {
@@ -98,11 +97,12 @@ public class ProjectEntity {
     public String toString() {
         return "ProjectEntity{" +
                 "id=" + id +
-                ", image=" + image +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", owner=" + owner +
                 ", users=" + users +
+                ", imageFileName='" + imageFileName + '\'' +
+                ", isDraft=" + isDraft +
                 '}';
     }
 

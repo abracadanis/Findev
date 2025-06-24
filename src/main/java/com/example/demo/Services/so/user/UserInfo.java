@@ -1,6 +1,6 @@
 package com.example.demo.Services.so.user;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public class UserInfo extends User {
     @NotNull
