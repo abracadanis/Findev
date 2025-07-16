@@ -14,7 +14,7 @@ services:
       - logs:/var/log/postgresql
 
   findev:
-    image: findev/fin/demo:latest
+    image: findev/fin/backend:latest
     ports:
       - "8180:8180"
     ulimits:
@@ -34,6 +34,12 @@ services:
       - "8080:3000"
     depends_on:
       - findev
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
 
 volumes:
   data:

@@ -1,4 +1,4 @@
-frontend/src/openapi
-frontend/node_modules
+frontend1/src/openapi
+frontend1/node_modules
 target
 .idea
